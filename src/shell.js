@@ -7,7 +7,7 @@ function handleFile(fileName, fileText, outputType) {
   console.time("Precompiled '" + fileName + "' to '" + newName + "'");
   //compile the file
   fileText = compiler.compile(fileText, outputType);
-  if(fileText == false) {
+  if(fileText === false) {
     console.log("Precompile failed on '" + fileName + "'");
     return;
   }

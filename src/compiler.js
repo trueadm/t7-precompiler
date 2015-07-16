@@ -24,7 +24,7 @@ var compiler = {
 
     var code = recast.print(transform(ast)).code;
 
-    if(code != "undefined") {
+    if(code !== "undefined") {
       output += code;
     } else {
       return false;
