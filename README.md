@@ -24,5 +24,5 @@ Alternatively, you can require t7-precompiler in your Node module by using:
 ```javascript
 var precompiler = require("t7-precompiler");
 
-precompiler.compile(...)
+precompiler.compile("var foo = 'bar';", "react");
 ```
