@@ -1,4 +1,3 @@
-
 var caches = {};
 
 var templateCache = {
