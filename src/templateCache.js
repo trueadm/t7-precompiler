@@ -11,7 +11,10 @@ var templateCache = {
     caches = {};
   },
   generateSource: function() {
-    var source = [];
+    var source = ["\n//t7 precompiled templates\n"];
+    if(Object.keys(caches).length === 0) {
+      return "";
+    }
     for(var key in caches) {
       source.push(";function __" + caches[key].funcId + "(){" + caches[key].template + "};");
     }

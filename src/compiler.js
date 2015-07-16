@@ -11,8 +11,9 @@ function transform(ast) {
 };
 
 var compiler = {
-  compile: function() {
+  compile: function(fileText, outputType) {
     var ast = recast.parse(fileText);
+    var output = "";
 
     for(outputName in t7.Outputs) {
       if(outputName.toLowerCase() === outputType.toLowerCase()) {
@@ -21,10 +22,15 @@ var compiler = {
       }
     }
 
-    var output = recast.print(transform(ast)).code;
+    var code = recast.print(transform(ast)).code;
 
+    if(code != "undefined") {
+      output += code;
+    } else {
+      return false;
+    }
     //add the template sources to bottom of file
-    output += "\n//t7 precompiled templates\n" + templateCache.generateSource();
+    output += templateCache.generateSource();
 
     return output;
   }
