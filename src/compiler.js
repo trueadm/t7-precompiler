@@ -2,7 +2,7 @@ var recast = require('recast');
 var types = recast.types;
 var Visitor = require('./visitor');
 var templateCache = require("./templateCache.js");
-var t7 = require("../t7");
+var t7 = require("t7");
 
 t7.setPrecompile(true);
 

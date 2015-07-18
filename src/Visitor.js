@@ -1,5 +1,5 @@
 var recast = require('recast');
-var t7 = require("../t7");
+var t7 = require("t7");
 var types = recast.types;
 var PathVisitor = types.PathVisitor;
 var n = types.namedTypes;
