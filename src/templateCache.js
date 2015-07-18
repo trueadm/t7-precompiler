@@ -1,5 +1,7 @@
 var caches = {};
 
+var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 var templateCache = {
   store: function(templateKey, funcId, template) {
     caches[templateKey] = {
@@ -19,6 +21,18 @@ var templateCache = {
       source.push(";function __" + caches[key].funcId + "(){" + caches[key].template + "};");
     }
     return source.join("\n");
+  },
+  makeId: function(templateKey) {
+    var text = "";
+    if(caches[templateKey]) {
+      return caches[templateKey].funcId;
+    }
+
+    for( var i=0; i < 5; i++ ) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
   }
 };
 
