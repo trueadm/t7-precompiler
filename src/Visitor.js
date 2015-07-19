@@ -60,7 +60,8 @@ Visitor.prototype.visitTaggedTemplateExpression = function(path) {
     funcId = templateCache.makeId(t7Node.templateKey);
     templateCache.store(t7Node.templateKey, funcId, t7Node.template);
     //then create an output for recast to parse
-    output = "t7.precompile({template: __" + funcId + ",templateKey: " + t7Node.templateKey + ", components: null, values: [" + expressions.join(", ") + "]})";
+    expressions.push("{template: __" + funcId + ",templateKey: " + t7Node.templateKey + ", components: null}");
+    output = "t7.precompile([" + expressions.join(", ") + "])";
     ast = recast.parse(output);
   }
 
