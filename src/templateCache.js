@@ -13,12 +13,12 @@ var templateCache = {
     caches = {};
   },
   generateSource: function() {
-    var source = ["\n//t7 precompiled templates\n"];
+    var source = ["\n/*t7 precompiled templates*/"];
     if(Object.keys(caches).length === 0) {
       return "";
     }
     for(var key in caches) {
-      source.push(";function __" + caches[key].funcId + "(){" + caches[key].template + "};");
+      source.push(";function __" + caches[key].funcId + "(__$props__, __$components__){" + caches[key].template + "};");
     }
     return source.join("\n");
   },
