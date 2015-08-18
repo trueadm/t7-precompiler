@@ -1,5 +1,5 @@
 var recast = require('recast');
-var t7 = require("t7");
+var t7 = require("../t7");
 var types = recast.types;
 var PathVisitor = types.PathVisitor;
 var n = types.namedTypes;
@@ -56,12 +56,23 @@ Visitor.prototype.visitTaggedTemplateExpression = function(path) {
 
     arguments = [templates].concat(placeholders);
     t7Node = t7.apply(null, arguments)
-    //we need to store the t7Node.compiled code in its own place in the page
-    funcId = templateCache.makeId(t7Node.templateKey);
-    templateCache.store(t7Node.templateKey, funcId, t7Node.template);
-    //then create an output for recast to parse
-    expressions.push("{template: __" + funcId + ",templateKey: " + t7Node.templateKey + ", components: null}");
-    output = "t7.precompile([" + expressions.join(", ") + "])";
+    if(t7Node.inlineObject) {
+      //replace templateValues with the raw expression
+      //replace the prpops with the expressions
+      var re = /__\$props__\[(.\d*)\]/g;
+      while ((m = re.exec(t7Node.inlineObject)) !== null) {
+        t7Node.inlineObject = t7Node.inlineObject.replace(m[0], expressions[m[1]]);
+      }
+      output = "return " + t7Node.inlineObject;
+
+    } else {
+      //we need to store the t7Node.compiled code in its own place in the page
+      funcId = templateCache.makeId(t7Node.templateKey);
+      templateCache.store(t7Node.templateKey, funcId, t7Node.template);
+      //then create an output for recast to parse
+      expressions.push("{template: __" + funcId + ",templateKey: " + t7Node.templateKey + ", components: null}");
+      output = "t7.precompile([" + expressions.join(", ") + "])";
+    }
     ast = recast.parse(output);
   }
 
