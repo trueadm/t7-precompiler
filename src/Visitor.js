@@ -1,3 +1,5 @@
+"use strict";
+
 var recast = require('recast');
 var t7 = require("../t7");
 var types = recast.types;
@@ -39,10 +41,11 @@ Visitor.prototype.visitTaggedTemplateExpression = function(path) {
   var placeholders = [];
   var i = 0;
   var t7Node = null;
-  var arguments = [];
+  var args = [];
   var ast = false;
   var output = "";
   var funcId = "";
+  var m, m2;
 
   //we check for t7
   if(node.tag.name === "t7") {
@@ -54,17 +57,27 @@ Visitor.prototype.visitTaggedTemplateExpression = function(path) {
       placeholders.push(null);
     }
 
-    arguments = [templates].concat(placeholders);
-    t7Node = t7.apply(null, arguments)
+    args = [templates].concat(placeholders);
+    t7Node = t7.apply(null, args)
     if(t7Node.inlineObject) {
       //replace templateValues with the raw expression
       //replace the prpops with the expressions
-      var re = /__\$props__\[(.\d*)\]/g;
-      while ((m = re.exec(t7Node.inlineObject)) !== null) {
-        t7Node.inlineObject = t7Node.inlineObject.replace(m[0], expressions[m[1]]);
-      }
-      output = "return " + t7Node.inlineObject;
+      var re = /__\$props__\[(\d*)\]/g;
+      var re2 = /t7._templateCache\["(-|.\d*)"\]/;
+      var newInlineObject = t7Node.inlineObject;
 
+      //make the new inline objects
+      while ((m = re.exec(t7Node.inlineObject)) !== null) {
+        newInlineObject = newInlineObject.replace(m[0], expressions[m[1]]);
+      }
+
+      var inlineObjectAndTemplate = newInlineObject;
+      //make the new inline templates
+      while ((m2 = re2.exec(inlineObjectAndTemplate)) !== null) {
+        inlineObjectAndTemplate = inlineObjectAndTemplate.replace(m2[0], "__t7__" + m2[1].replace("-", "$"))
+      }
+
+      output = "(" + inlineObjectAndTemplate + ")";
     } else {
       //we need to store the t7Node.compiled code in its own place in the page
       funcId = templateCache.makeId(t7Node.templateKey);

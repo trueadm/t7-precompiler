@@ -19,35 +19,35 @@ t7.module(function(t7) {
       }
       render() {
         if(this.state.visible) {
-          return return {dom: null, key: null, template: t7._templateCache["-292331807"], templateValues: [
+          return ({dom: null, key: null, template: __t7__$292331807, templateValues: [
                   this.hide,
-                  __$props__[1],
+                  this.state.counter,
                   this.state.name,
                   this.props.time.toString(),
                   this.renderForm(),
                   this.state.name,
-                  (this.state.isOn === false ? return {dom: null, key: null, template: t7._templateCache["1149231429"], } : return {dom: null, key: null, template: t7._templateCache["944087704"], templateValue: this.props.time.toString(), templateElements: null, templateTypes: null}),
+                  (this.state.isOn === false ? ({dom: null, key: null, template: __t7__1149231429, }) : ({dom: null, key: null, template: __t7__944087704, templateValue: this.props.time.toString(), templateElements: null, templateTypes: null})),
                   this.clickSwitch,
-                  return {dom: null, key: null, template: t7._templateCache["1024510217"], templateValue: this.state.foo, templateElements: null, templateTypes: null},
+                  ({dom: null, key: null, template: __t7__1024510217, templateValue: this.state.foo, templateElements: null, templateTypes: null}),
                   this.props.people != null ? this.props.people.map(this.renderPerson.bind(this)) : null,
                   this.state.className
-          ], templateElements: Array(11), templateTypes: Array(11)};
+          ], templateElements: Array(11), templateTypes: Array(11)});
         } else {
-          return return {dom: null, key: null, template: t7._templateCache["1417139913"], templateValue: this.show, templateElements: null, templateTypes: null};
+          return ({dom: null, key: null, template: __t7__1417139913, templateValue: this.show, templateElements: null, templateTypes: null});
         }
       }
       renderPerson(person) {
         if(this.state.counter % 3 === 1) {
-          return return {dom: null, key: null, template: t7._templateCache["1630775210"], templateValues: [person, __$props__[1]], templateElements: Array(2), templateTypes: Array(2)};
+          return ({dom: null, key: null, template: __t7__1630775210, templateValues: [person, this.state.counter], templateElements: Array(2), templateTypes: Array(2)});
         } else {
-          return return {dom: null, key: null, template: t7._templateCache["1505306658"], templateValues: [person, __$props__[1]], templateElements: Array(2), templateTypes: Array(2)};
+          return ({dom: null, key: null, template: __t7__1505306658, templateValues: [person, this.state.counter], templateElements: Array(2), templateTypes: Array(2)});
         }
       }
       renderForm() {
         if(this.state.formShow) {
-          return return {dom: null, key: null, template: t7._templateCache["1647030613"], templateValues: [this.state.textFieldValue, this.turnOffForm], templateElements: Array(2), templateTypes: Array(2)};
+          return ({dom: null, key: null, template: __t7__1647030613, templateValues: [this.state.textFieldValue, this.turnOffForm], templateElements: Array(2), templateTypes: Array(2)});
         } else {
-          return return {dom: null, key: null, template: t7._templateCache["1788624329"], templateValue: this.turnOnForm, templateElements: null, templateTypes: null};
+          return ({dom: null, key: null, template: __t7__1788624329, templateValue: this.turnOnForm, templateElements: null, templateTypes: null});
         }
       }
       turnOffForm(e) {
@@ -112,7 +112,7 @@ t7.module(function(t7) {
     }
 
     Inferno.render(
-      return {dom: null, component: __$components__.App, props:  {'time':date,'people':people}, key: null, template: null},
+      ({dom: null, component: __$components__.App, props:  {'time':date,'people':people}, key: null, template: null}),
       document.getElementById("app")
     );
     setTimeout(update, 1000);
