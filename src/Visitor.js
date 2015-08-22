@@ -71,19 +71,26 @@ Visitor.prototype.visitTaggedTemplateExpression = function(path) {
         newInlineObject = newInlineObject.replace(m[0], expressions[m[1]]);
       }
 
+      //repalce t7 component references
+      newInlineObject = newInlineObject.replace(/__\$components__\.(\w{0,20})/g, "t7.loadComponent(\"$1\")");
+
       var inlineObjectAndTemplate = newInlineObject;
+      var funcId = "", templateCode = "";
       //make the new inline templates
       while ((m2 = re2.exec(inlineObjectAndTemplate)) !== null) {
-        inlineObjectAndTemplate = inlineObjectAndTemplate.replace(m2[0], "__t7__" + m2[1].replace("-", "$"))
+        funcId = "__" + m2[1].replace("-", "0");
+        templateCode = t7.getTemplateCache(t7Node.templateKey).toString();
+        templateCache.store(t7Node.templateKey, funcId, templateCode);
+        inlineObjectAndTemplate = inlineObjectAndTemplate.replace(m2[0], funcId);
       }
 
       output = "(" + inlineObjectAndTemplate + ")";
     } else {
       //we need to store the t7Node.compiled code in its own place in the page
-      funcId = templateCache.makeId(t7Node.templateKey);
+      funcId = "__" + templateCache.makeId(t7Node.templateKey);
       templateCache.store(t7Node.templateKey, funcId, t7Node.template);
       //then create an output for recast to parse
-      expressions.push("{template: __" + funcId + ",templateKey: " + t7Node.templateKey + ", components: null}");
+      expressions.push("{template: " + funcId + ",templateKey: " + t7Node.templateKey + ", components: null}");
       output = "t7.precompile([" + expressions.join(", ") + "])";
     }
     ast = recast.parse(output);
