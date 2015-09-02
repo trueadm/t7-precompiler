@@ -1,13 +1,13 @@
 {
   "name": "t7-precompiler",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A node precompiler for the t7 JavaScript template library",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "t7": "~0.2.0"
+    "t7": "~0.3.0"
   },
   "repository": {
     "type": "git",
