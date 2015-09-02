@@ -6,10 +6,10 @@ function cleanTemplate(template, key, caches) {
   //these are Inferno templates
   if (template.indexOf("function anonymous() {") > -1 ) {
     template = template.replace("function anonymous() {", "");
-    template = template.replace("var fragment = arguments[0];var component = arguments[1];var t7 = arguments[2];", "");
+    template = template.replace("var fragment = arguments[0];var t7 = arguments[1];", "");
     template = template.substring(0, template.length - 1);
     template = template.replace(/(\r\n|\n|\r)/gm,"");
-    return  "(fragment, component, t7){" + template + "};" + caches[key].funcId  + ".key=" + key  + ";"
+    return  "(fragment, t7){" + template + "};" + caches[key].funcId  + ".key=" + key  + ";"
   }
   return "(__$props__, __$components__, t7){" + template + "};";
 }
